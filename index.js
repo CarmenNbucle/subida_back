@@ -14,24 +14,24 @@ dotenv.config();
 conectarDB();
 
 //Configurar CORS (withelist)
-const whiteList = [process.env.FRONTEND_URL];
+// const whiteList = [process.env.FRONTEND_URL];
  
-const corsOptions= {
-    origin: function (origin, callback) {
-        console.log(origin)
-        if(whiteList.includes(origin)){
+// const corsOptions= {
+//     origin: function (origin, callback) {
+//         console.log(origin)
+//         if(whiteList.includes(origin)){
             
-            callback(null, true) //dándole acceso a la API
+//             callback(null, true) //dándole acceso a la API
             
-        }else{
-            callback(new Error("Error cogido en las cors (index.js)"))
-        }
-    }
-};
+//         }else{
+//             callback(new Error("Error cogido en las cors (index.js)"))
+//         }
+//     }
+// };
  
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-
+app.use(cors());
 
 
 //Cabeceras para CORS
