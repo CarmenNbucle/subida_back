@@ -24,7 +24,7 @@ const corsOptions= {
             callback(null, true) //dándole acceso a la API
             
         }else{
-            callback(new Error("Error de cors"))
+            callback(new Error("Error cogido en las cors (index.js)"))
         }
     }
 };
