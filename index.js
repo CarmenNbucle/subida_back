@@ -17,7 +17,8 @@ conectarDB();
 const whiteList = [process.env.FRONTEND_URL];
  
 const corsOptions= {
-    origin: function (origin, callback){
+    origin: function (origin, callback) {
+        console.log(origin)
         if(whiteList.includes(origin)){
             
             callback(null, true) //dándole acceso a la API
@@ -26,12 +27,12 @@ const corsOptions= {
             callback(new Error("Error de cors"))
         }
     }
-}
+};
  
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 
-// // Cabeceras para CORS
+// Cabeceras para CORS
 // app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
