@@ -1,7 +1,7 @@
 // en vez de poner: "const express = require("express");" --> se puede hacer porque se ha añadido a packege.json ""type": "module","
 import express  from "express";
 import dotenv from "dotenv";
-import cors from 'cors'
+import cors from "cors";
 import conectarDB from "./config/db.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
