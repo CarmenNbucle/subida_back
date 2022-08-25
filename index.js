@@ -5,7 +5,7 @@ import cors from "cors";
 import conectarDB from "./config/db.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
-import tareaRoutes from "./routes/tareaRoutes.js";
+import listaRoutes from "./routes/listaRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -45,7 +45,7 @@ app.use(cors());
 // Routing
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/proyectos", proyectoRoutes);
-app.use("/api/tareas", tareaRoutes);
+app.use("/api/lista", listaRoutes);
 
 // app.get("/", (req, res) => {
 //     res.send("Holaaaaa!")

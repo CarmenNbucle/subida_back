@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Proyecto from "../models/Proyecto.js";
-import Tarea from "../models/Tarea.js";
+import Lista from "../models/Lista.js";
 
 
 const obtenerProyectos = async (req, res) => {

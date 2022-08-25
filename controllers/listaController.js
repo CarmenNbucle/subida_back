@@ -1,8 +1,8 @@
 import Proyecto from "../models/Proyecto.js";
-import Tarea from "../models/Tarea.js";
+import Lista from "../models/Lista.js";
 
 
-const agregarTarea = async (req, res) => {
+const agregarLista = async (req, res) => {
     const { proyecto } = req.body;
     const existeProyecto = await Proyecto.findById(proyecto);
 
@@ -12,98 +12,97 @@ const agregarTarea = async (req, res) => {
     }
 
     if(existeProyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error('No tienes permiso para agregar tareas');
+        const error = new Error('No tienes permiso para agregar listas');
         return res.status(404).json({ msg: error.message })
     } 
 
     try {
-        const tareaAlmacenada = await Tarea.create(req.body);
-        res.json(tareaAlmacenada)
+        const listaAlmacenada = await Lista.create(req.body);
+        res.json(listaAlmacenada)
     } catch (error) {
         console.log(error)
     }
 };
 
-const obtenerTarea = async (req, res) => {
-    // // saber la tarea
+const obtenerLista = async (req, res) => {
+    // saber la tarea
     // const { id } = req.params;
     // const tarea = await Tarea.findById(id);
-    // // saber el proyecto
+    // saber el proyecto
     // const { proyecto } = tarea
     // const existeProyecto = await Proyecto.findById(proyecto)
 
     // con "populate" podemos saber la tarea y el proyecto (proyecto está contenido en tarea)
     const { id } = req.params;
     try {
-        const tarea = await Tarea.findById(id).populate("proyecto");
-        if(!tarea){
-            const error = new Error('La tarea no existe');
+        const lista = await Lista.findById(id).populate("proyecto");
+        if(!lista){
+            const error = new Error('La Lista no existe');
             return res.status(404).json({ msg: error.message });
         }
-        if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        if (lista.proyecto.creador.toString() !== req.usuario._id.toString()) {
             const error = new Error('Acción no válida');
             return res.status(403).json({ msg: error.message });
         } 
-        res.json(tarea);
+        res.json(lista);
     } catch (error) {
-        const errore = new Error('La tarea no se encuentra');
+        const errore = new Error('La Lista no se encuentra');
         return res.status(404).json({ msg: errore.message });
     } 
 };
 
-const actualizarTarea = async (req, res) => {
+const actualizarLista = async (req, res) => {
     const { id } = req.params;
     try {
-        const tarea = await Tarea.findById(id).populate("proyecto");
-        if(!tarea){
-            const error = new Error('La tarea no existe');
+        const lista = await Lista.findById(id).populate("proyecto");
+        if(!lista){
+            const error = new Error('La Lista no existe');
             return res.status(404).json({ msg: error.message });
         }
-        if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        if (lista.proyecto.creador.toString() !== req.usuario._id.toString()) {
             const error = new Error('Acción no válida');
             return res.status(403).json({ msg: error.message });
         } 
-        
-        tarea.nombre = req.body.nombre || tarea.nombre;
-        tarea.descripcion = req.body.descripcion || tarea.descripcion;
-        tarea.prioridad = req.body.prioridad || tarea.prioridad;
-        tarea.fechaEntrega = req.body.fechaEntrega || tarea.fechaEntrega;
+        lista.nombre = req.body.nombre || lista.nombre;
+        lista.descripcion = req.body.descripcion || lista.descripcion;
+        lista.prioridad = req.body.prioridad || lista.prioridad;
+        lista.fechaEntrega = req.body.fechaEntrega || lista.fechaEntrega;
 
         try {
-            const tareaAlmacenada = await tarea.save();
-            res.json(tareaAlmacenada)
+            const listaAlmacenada = await lista.save();
+            res.json(listaAlmacenada)
         } catch (error) {
             console.log(error);
         }
 
     } catch (error) {
-        const errore = new Error('La tarea no se encuentra');
+        const errore = new Error('La lista no se encuentra');
         return res.status(404).json({ msg: errore.message });
     } 
 };
 
-const eliminiarTarea = async (req, res) => {
+const eliminiarLista = async (req, res) => {
     const { id } = req.params;
     try {
-        const tarea = await Tarea.findById(id).populate("proyecto");
-        if(!tarea){
-            const error = new Error('La tarea no existe');
+        const lista = await Lista.findById(id).populate("proyecto");
+        if(!lista){
+            const error = new Error('La lista no existe');
             return res.status(404).json({ msg: error.message });
         }
-        if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        if (lista.proyecto.creador.toString() !== req.usuario._id.toString()) {
             const error = new Error('Acción no válida');
             return res.status(403).json({ msg: error.message });
         } 
 
         try {
-            await tarea.deleteOne();
-            res.json({ msg: "tarea Eliminada" })
+            await lista.deleteOne();
+            res.json({ msg: "lista Eliminada" })
         } catch (error) {
             console.log(error);
         }
 
     } catch (error) {
-        const errore = new Error('La tarea no se encuentra');
+        const errore = new Error('La lista no se encuentra');
         return res.status(404).json({ msg: errore.message });
     } 
     
@@ -114,9 +113,9 @@ const cambiarEstado = async (req, res) => {
 };
 
 export{
-    agregarTarea,
-    obtenerTarea,
-    actualizarTarea,
-    eliminiarTarea,
+    agregarLista,
+    obtenerLista,
+    actualizarLista,
+    eliminiarLista,
     cambiarEstado,
 }
